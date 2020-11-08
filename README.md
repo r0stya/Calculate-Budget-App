@@ -1,4 +1,4 @@
-# app
+# Calculate-Budget-App
 
 ## Project setup
 ```
