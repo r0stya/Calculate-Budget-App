@@ -2,7 +2,7 @@
     <div class="budget-list-wrap">
         <el-card :header="header">
             <template v-if="!isEmpty">
-                <BudgetListItem :list='list'/>
+                <BudgetListItem :list='list' @deleteItem="deleteItem"/>
             </template>
             <el-alert v-else type="info" :title="emptyTitle" :closable="false" />
             
@@ -25,18 +25,19 @@ export default {
     },
     data: () => ({
         header: 'Budget List',
-        emptyTitle: 'Empty List'
+        emptyTitle: 'Empty List',
     }),
     computed: {
         isEmpty() {
             return !Object.keys(this.list).length
-        }
+        },
     },
     methods: {
         deleteItem(id) {
             this.$emit('deleteItem', id)
         }
     }
+    
 }
 </script>
 

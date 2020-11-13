@@ -3,7 +3,6 @@
     <Form @submitForm="onFormSubmit"/>
     <TotalBalance :total='totalBalance' />
     <BudgetList :list="list" @deleteItem="onDeleteItem"/>
-    
   </div>
 </template>
 
@@ -20,17 +19,21 @@ export default {
   },
   data: () => ({
     list: {},
+    
   }),
   computed: {
     totalBalance() {
       return Object.values(this.list).reduce((acc, i) => acc += i.value, 0)
-    }
+    },
+    
   },
   methods: {
     onDeleteItem(id) {
       this.$delete(this.list, id)
+      
     },
     onFormSubmit(data) {
+      if(data.type === 'OUTCOME') data.value = Number('-' + data.value)
       const newObj = {
         ...data,
         id: String(Math.random())

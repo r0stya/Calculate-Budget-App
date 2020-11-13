@@ -32,7 +32,7 @@ export default {
             comment: [{ required: true, message: 'Please input comment', trigger: 'blur' }],
             value: [
                 { required: true, message: 'Please input value', trigger: 'change' },
-                {type: 'number', message: 'Value must be a number', trigger: 'change'}
+                {type: 'number', message: 'Value must be a number', trigger: 'change'},
                 ]
         }
     }),
