@@ -1,31 +1,31 @@
 <template>
     <div class="total-value" :style="balanceColor">
-        Balance: {{ total }}
+        Balance: {{ totalBalance || 0 }}
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
     name: 'TotalBalance',
     data: () => ({
         colors: ['#000', '#04D627', '#D10404'],
     }),
-    props: {
-        total: {
-            type: Number,
-            default: 0,
-        }
-    },
     computed: {
+        ...mapGetters(['getListItem']),
         balanceColor() {
-            if(this.total > 0) {
+            if(this.totalBalance > 0) {
                 return `color: ${this.colors[1]}`
-            }else if(this.total < 0) {
+            }else if(this.totalBalance < 0) {
                 return `color: ${this.colors[2]}`
             }else {
                 return `color: ${this.colors[0]}`
             }
+        },
+        totalBalance() {
+            return Object.values(this.getListItem).reduce((acc, i) => acc += i.value, 0)
         }
+
     }
 }
 </script>

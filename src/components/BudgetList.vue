@@ -2,7 +2,7 @@
     <div class="budget-list-wrap">
         <el-card :header="header">
             <template v-if="!isEmpty">
-                <BudgetListItem :list='list' @deleteItem="deleteItem"/>
+                <BudgetListItem />
             </template>
             <el-alert v-else type="info" :title="emptyTitle" :closable="false" />
             
@@ -12,24 +12,20 @@
 
 <script>
 import BudgetListItem from './BudgetListItem'
+import { mapGetters } from 'vuex'
 export default {
     name: 'BudgetList',
     components: {
         BudgetListItem,
-    },
-    props: {
-        list: {
-            type: Object,
-            default: () => ({})
-        }
     },
     data: () => ({
         header: 'Budget List',
         emptyTitle: 'Empty List',
     }),
     computed: {
+        ...mapGetters(['getListItem']),
         isEmpty() {
-            return !Object.keys(this.list).length
+            return !Object.keys(this.getListItem).length
         },
     },
     methods: {

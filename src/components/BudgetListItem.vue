@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="list-item" v-for="(item, prop) in list" :key="prop">
+        <div class="list-item" v-for="(item, prop) in getListItem" :key="prop">
             <i v-if="item.type === 'INCOME'" class="el-icon-top"></i>
             <i v-if="item.type === 'OUTCOME'" class="el-icon-bottom"></i>
             <span class="budget-comment">{{ item.comment }}</span>
@@ -13,9 +13,10 @@
             <span>Are you sure you want to delete?</span>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="dialogVisible = false, deleteItem(item.id)">Confirm</el-button>
+                <el-button type="primary" @click="dialogVisible = false, onDeleteItem(item.id)">Confirm</el-button>
             </span>
             </el-dialog>
+            
         </div>
 
          
@@ -23,6 +24,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 export default {
     name: 'BudgetListItem',
     data: () => ({
@@ -32,24 +34,22 @@ export default {
             red: "color: #D10404"
         }
     }),
-    props: {
-        list: {
-            type: Object,
-            default: () => ({})
-        }
-    },
     methods: {
-        deleteItem(id) {
-            this.$emit('deleteItem', id)
-        },
+        ...mapMutations(['DELETE_ITEM']),
         setValueColor(value) {
             if(value <= 0) {
                 return this.valueColor.red
             }else {
                 return this.valueColor.green
             }
-        }
-        
+        },
+        onDeleteItem(id) {
+            this.DELETE_ITEM(id)
+        },
+
+    },
+    computed: {
+        ...mapGetters(['getListItem']),
     }
 
 }
